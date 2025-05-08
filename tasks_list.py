@@ -5,6 +5,9 @@ try:
         to_do = json.load(file)
 except FileNotFoundError:
     to_do = []
+except json.JSONDecodeError:
+    print('Warning: Could not read tasks_list.json (file may be corrupted). Starting fresh')
+    to_do = []
 
 while True:
     task = input('Enter a task: ')
