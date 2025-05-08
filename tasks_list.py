@@ -21,7 +21,7 @@ while True:
     task = input('Enter a task: ')
     to_do.append({"task": task, "complete": False})
 
-    response = input('Task successfully added! Would you like to add another task?(y/n) ')
+    response = input('Task successfully added! Would you like to add another task? (y/n) ')
     if  response.lower() == 'y':
         print()
         continue
@@ -32,7 +32,7 @@ while True:
             print(f'{i}. [{status}] {item["task"]}')
         break
 
-mark_done = input("\nWould you like to mark any task as complete (y/n)")
+mark_done = input("\nWould you like to mark any task as complete? (y/n) ")
 if mark_done.lower() in ('yes', 'y'):
     for i, item in enumerate(to_do, 1):
         print(f"{i}. {item['task']}")
