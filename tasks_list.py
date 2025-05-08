@@ -1,4 +1,5 @@
 """Module designed to create a simple to-do list"""
+
 import json
 try:
     with open("tasks_list.json", "r", encoding="utf-8") as file:
@@ -24,3 +25,5 @@ while True:
         break
 with open("tasks_list.json", "w", encoding='utf-8') as file:
     json.dump(to_do, file)
+
+input("\nProgram complete. Press Enter to exit...")
