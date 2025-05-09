@@ -12,26 +12,55 @@ except json.JSONDecodeError:
 if to_do:
     print("Here are your saved tasks:")
     for i, item in enumerate(to_do, 1):
-        status = "complete" if item["complete"] else "incomplete"
+        status = "C" if item["complete"] else "IN"
     print(f"{i}. [{status}] {item['task']}")
 else:
     print("No saved tasks found.\n")
 
 while True:
-    task = input('Enter a task: ')
-    to_do.append({"task": task, "complete": False})
+    print("\nWhat would you like to do today?")
+    print("1. Add a task")
+    print("2. Mark task as complete")
+    print("3. Quit")
 
-    response = input('Task successfully added! Would you like to add another task? (y/n) ')
-    if  response.lower() == 'y':
-        print()
-        continue
-    elif response.lower() == 'n':
-        print('To do list ended successfully. Here is your current list of things to do. ')
+    choice = input("Enter the number (1-3) denoting your choice. ")
+    if choice == "1":
+
+        print("Adding task...")
+        task = input("Enter a task: ")
+        to_do.append({'task': task, "complete": False})
+        print(f"Task '{task}' created successfully!")
+        with open("tasks_list.json", "w", encoding="utf-8") as file:
+            json.dump(to_do, file)
+
+    elif choice == "2":
+        if not to_do:
+            print("No tasks to mark complete.")
+            continue
+
         for i, item in enumerate(to_do, 1):
-            status = "complete" if item["complete"] else "incomplete"
-            print(f'{i}. [{status}] {item["task"]}')
-        break
+            status = "C" if item["complete"] else "IN"
+            print(f"{i}. [{status}] [{item['task']}]")
 
+        try:
+            choice = int(input("Enter the number of the task to mark complete: "))
+            if 1 <= choice <= len(to_do):
+                to_do[choice - 1]["complete"] = True
+                print(f"Marked '{to_do[choice - 1]['task']}' as complete.")
+
+                with open("tasks_list.json", "w",encoding="utf-8") as file:
+                    json.dump(to_do, file)
+            else:
+                print("Invalid task number.")
+        except ValueError:
+            print("Please enter a valid number.")
+
+
+    elif choice == "3":
+        print("Exiting program. ")
+
+    else:
+        print("Invalid input. Please enter a number between 1-3.")
 mark_done = input("\nWould you like to mark any task as complete? (y/n) ")
 if mark_done.lower() in ('yes', 'y'):
     for i, item in enumerate(to_do, 1):
