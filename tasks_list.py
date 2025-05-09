@@ -62,21 +62,3 @@ while True:
 
     else:
         print("Invalid input. Please enter a number between 1-3.")
-mark_done = input("\nWould you like to mark any task as complete? (y/n) ")
-if mark_done.lower() in ('yes', 'y'):
-    for i, item in enumerate(to_do, 1):
-        print(f"{i}. {item['task']}")
-    try:
-        choice = int(input("Enter the number of tasks to mark complete: "))
-        if 1 <= choice <= len(to_do):
-            to_do[choice - 1]['complete'] = True
-            print(f"Marked '{to_do[choice - 1]['task']}' as complete.")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Not a number.")
-
-with open("tasks_list.json", "w", encoding='utf-8') as file:
-    json.dump(to_do, file)
-
-input("Program complete. Click any button to exit.")
