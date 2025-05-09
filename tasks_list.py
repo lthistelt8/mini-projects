@@ -1,4 +1,4 @@
-"""Module designed to create a simple to-do list"""
+"""A simple to-do list."""
 import json
 try:
     with open("tasks_list.json", "r", encoding="utf-8") as file:
@@ -6,7 +6,7 @@ try:
 except FileNotFoundError:
     to_do = []
 except json.JSONDecodeError:
-    print('Warning: Could not read tasks_list.json (file may be corrupted). Starting fresh')
+    print('Warning: Could not read tasks_list.json (file may be corrupted). Starting fresh...')
     to_do = []
 
 if to_do:
@@ -29,7 +29,7 @@ while True:
         print("Adding task...")
         task = input("Enter a task: ")
         to_do.append({'task': task, "complete": False})
-        print(f"Task '{task}' created successfully!")
+        print(f"\nTask '{task}' created successfully!")
         with open("tasks_list.json", "w", encoding="utf-8") as file:
             json.dump(to_do, file)
 
@@ -46,18 +46,19 @@ while True:
             choice = int(input("Enter the number of the task to mark complete: "))
             if 1 <= choice <= len(to_do):
                 to_do[choice - 1]["complete"] = True
-                print(f"Marked '{to_do[choice - 1]['task']}' as complete.")
+                print(f"\nMarked '{to_do[choice - 1]['task']}' as complete.")
 
                 with open("tasks_list.json", "w",encoding="utf-8") as file:
                     json.dump(to_do, file)
             else:
-                print("Invalid task number.")
+                print("\nInvalid task number.")
         except ValueError:
-            print("Please enter a valid number.")
+            print("\nPlease enter a valid number.")
 
 
     elif choice == "3":
-        print("Exiting program. ")
+        print("\nExiting program. ")
+        break
 
     else:
         print("Invalid input. Please enter a number between 1-3.")
