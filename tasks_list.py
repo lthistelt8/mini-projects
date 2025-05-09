@@ -26,16 +26,17 @@ while True:
     choice = input("Enter the number (1-3) denoting your choice. ")
     if choice == "1":
 
-        print("Adding task...")
+        print("\nAdding task...")
         task = input("Enter a task: ")
         to_do.append({'task': task, "complete": False})
         print(f"\nTask '{task}' created successfully!")
         with open("tasks_list.json", "w", encoding="utf-8") as file:
             json.dump(to_do, file)
+        continue
 
     elif choice == "2":
         if not to_do:
-            print("No tasks to mark complete.")
+            print("\nNo tasks to mark complete.")
             continue
 
         for i, item in enumerate(to_do, 1):
@@ -54,6 +55,7 @@ while True:
                 print("\nInvalid task number.")
         except ValueError:
             print("\nPlease enter a valid number.")
+        continue
 
 
     elif choice == "3":
