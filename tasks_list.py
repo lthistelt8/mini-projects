@@ -1,5 +1,8 @@
 """A simple to-do list."""
 import json
+import os
+print("Current working directory:", os.getcwd())
+
 try:
     with open("tasks_list.json", "r", encoding="utf-8") as file:
         to_do = json.load(file)
