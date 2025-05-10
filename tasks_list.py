@@ -9,15 +9,16 @@ except json.JSONDecodeError:
     print('Warning: Could not read tasks_list.json (file may be corrupted). Starting fresh...')
     to_do = []
 
-if to_do:
-    print("Here are your saved tasks:")
-    for i, item in enumerate(to_do, 1):
-        status = "C" if item["complete"] else "IN"
-    print(f"{i}. [{status}] {item['task']}")
-else:
-    print("No saved tasks found.\n")
-
 while True:
+    if to_do:
+        print("Here are your active tasks:")
+        for i, item in enumerate(to_do, 1):
+            status = "C" if item['complete'] else "IN"
+            print(f"{i}. [{status}] {item['task']}")
+    else:
+        print('No saved tasks found.\n')
+
+
     print("\nWhat would you like to do today?")
     print("1. Add a task")
     print("2. Mark task as complete")
@@ -30,8 +31,13 @@ while True:
         task = input("Enter a task: ")
         to_do.append({'task': task, "complete": False})
         print(f"\nTask '{task}' created successfully!")
-        with open("tasks_list.json", "w", encoding="utf-8") as file:
-            json.dump(to_do, file)
+
+        try:
+            with open("tasks_list.json", "w", encoding="utf-8") as file:
+                json.dump(to_do, file)
+        except Exception as e:
+            print("Error writing to file:", e)
+            input("Press Enter to exit... ")
         continue
 
     elif choice == "2":
