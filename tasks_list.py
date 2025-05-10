@@ -71,5 +71,15 @@ while True:
         print("\nExiting program. ")
         break
 
+    elif choice == 'tstadminluthi':
+        confirm = input("!!! ADMIN MODE: clear ALL tasks? (y/n This cannot be undone!) ")
+        if confirm.lower()in ('y', 'yes'):
+            to_do.clear()
+            with open('tasks_list.json',"w", encoding="utf-8") as f:
+                json.dump(to_do, f)
+            print("All tasks have been cleared")
+        else:
+            print("Admin action cancelled. Returning to main menu.\n")
+
     else:
         print("Invalid input. Please enter a number between 1-3.")
