@@ -77,7 +77,7 @@ while True:
             to_do.clear()
             with open('tasks_list.json',"w", encoding="utf-8") as f:
                 json.dump(to_do, f)
-            print("All tasks have been cleared")
+            print("All tasks have been cleared.")
         else:
             print("Admin action cancelled. Returning to main menu.\n")
 
