@@ -8,9 +8,11 @@ try:
         to_do = json.load(file)
 except FileNotFoundError:
     to_do = []
+    archive = []
 except json.JSONDecodeError:
     print('Warning: Could not read tasks_list.json (file may be corrupted). Starting fresh...')
     to_do = []
+    archive = []
 
 while True:
     if to_do:
@@ -25,7 +27,8 @@ while True:
     print("\nWhat would you like to do today?")
     print("1. Add a task")
     print("2. Mark task as complete")
-    print("3. Quit")
+    print ('3. View completed (archived) tasks')
+    print("4. Quit")
 
     choice = input("Enter the number (1-3) denoting your choice. ")
     if choice == "1":
@@ -56,7 +59,8 @@ while True:
             choice = int(input("Enter the number of the task to mark complete: "))
             if 1 <= choice <= len(to_do):
                 to_do[choice - 1]["complete"] = True
-                print(f"\nMarked '{to_do[choice - 1]['task']}' as complete.")
+                archive.append({'task': choice})
+                print(f"\nMarked '{to_do[choice - 1]['task']}' as complete. Archive updated.")
 
                 with open("tasks_list.json", "w",encoding="utf-8") as file:
                     json.dump(to_do, file)
@@ -66,8 +70,20 @@ while True:
             print("\nPlease enter a valid number.")
         continue
 
-
     elif choice == "3":
+        print("\nCompleted tasks: ")
+        for i, item in enumerate(archive, 1):
+            if status == "C":
+                print(status)
+        revers = "Enter the number of the task to return to 'incomplete' status. Otherwise, press the Space bar to return to the main menu."
+        if 1 <= revers <=len(archive):
+            archive[revers - 1]["complete"] = False
+        elif revers == " ":
+            print("\nReturning to main menu...")
+            continue
+
+
+    elif choice == "4":
         print("\nExiting program. ")
         break
 
