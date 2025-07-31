@@ -2,11 +2,11 @@
 Executes business logic, using `data_entry.py` return values
 '''
 
-import matplotlib.pyplot as plt
+import matplotlib as plt
 import pandas as pd
 import csv
 from datetime import datetime
-from data_entry import get_category, get_amount, get_date, get_description
+from data_entry import get_category, get_amount, get_date, get_description, CATEGORIES
 
 class CSV:
   CSV_FILE = "finance_data.csv" #class variable
@@ -36,12 +36,12 @@ class CSV:
 
   @classmethod
   def get_transactions(cls, start_date, end_date):
-    df = PD.read_csv(cls.CSV_FILE)
+    df = pd.read_csv(cls.CSV_FILE)
     df['date'] = pd.to_datetime(df['date'], format=CSV.FORMAT) #directly accesses 'date' column of CSV file, converts to a datetime object
     start_date = datetime.strptime(start_date, CSV.FORMAT) #converts start_date from str to datetime
     end_date = datetime.strptime(end_date, CSV.FORMAT)
 
-    mask = (df['date']) >= start_date & (df['date']) <= end_date #filters by data in 'date' row (the "masked" data) greater than the start_date, less than the end_date, using data converted from strings
+    mask = (df['date']) >= start_date and (df['date']) <= end_date #filters by data in 'date' row (the "masked" data) greater than the start_date, less than the end_date, using data converted from strings
     filtered_df = df.loc[mask] #locates all instances where the data matches the mask
 
     if filtered_df.empty:
@@ -52,15 +52,15 @@ class CSV:
       ) #displays all transactions within date range
     print(
       filtered_df.to_string(index=False, formatters = {'date': lambda x: x.strftime(CSV.FORMAT)}
-      )
+      ) 
     )
-
-      total_income = filtered_df[filtered_df['category'] == 'Income']['amount'].sum() #filters all rows with "Income" label, then totals the 'amount'
-      total_expense = filtered_df[filtered_df['category'] == 'Expense']['amount'].sum()
-      print("\nSummary")
-      print(f"Total income: ${total_income:.2f}")
-      print(f"Total expense: ${total_expense:.2f}")
-      print(f"Net Savings: ${(total_income - total_expense):.2f}")
+    
+    total_income = filtered_df[filtered_df['category'] == 'Income']['amount'].sum() #filters all rows with "Income" label, then totals the 'amount'
+    total_expense = filtered_df[filtered_df['category'] == 'Expense']['amount'].sum()
+    print("\nSummary")
+    print(f"Total income: ${total_income:.2f}")
+    print(f"Total expense: ${total_expense:.2f}")
+    print(f"Net Savings: ${(total_income - total_expense):.2f}")
 
     return filtered_df
 

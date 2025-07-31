@@ -2,7 +2,6 @@
 collects data for use in `main.py`
 '''
 
-
 from datetime import datetime
 
 date_format = "%d-%m-%Y"
